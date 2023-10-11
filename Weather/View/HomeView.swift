@@ -9,12 +9,17 @@ import SwiftUI
 
 struct HomeView: View {
     @ObservedObject var locationManager: LocationManager
+    @ObservedObject var weatherDataManager: WeatherDataManager
 
     var body: some View {
-        HeaderView(lastLocationName: $locationManager.lastLocationName)
+        HeaderView(lastLocationName: $locationManager.lastLocationName, weatherData: $weatherDataManager.weatherData)
+            .onChange(of: locationManager) { _, newValue in
+                print(newValue)
+                weatherDataManager.getWeatherData(latitude: newValue.lastLocationCoordinate?.latitude ?? 0, longitude: newValue.lastLocationCoordinate?.longitude ?? 0)
+            }
     }
 }
 
 #Preview {
-    HomeView(locationManager: LocationManager())
+    HomeView(locationManager: LocationManager(), weatherDataManager: WeatherDataManager())
 }

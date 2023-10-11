@@ -13,10 +13,12 @@ class LocationManager: NSObject, ObservableObject {
     @Published var authorisationStatus: CLAuthorizationStatus = .notDetermined
     @Published var lastLocationCoordinate: CLLocationCoordinate2D?
     @Published var lastLocationName: String?
+    var onLocationUpdated: ((Double, Double) -> Void)?
 
     override init() {
         super.init()
         self.locationManager.delegate = self
+        self.onLocationUpdated = nil
     }
 
     public func requestAuthorisation() {
@@ -44,6 +46,7 @@ extension LocationManager: CLLocationManagerDelegate {
         guard let location = locations.last else { return }
         lastLocationCoordinate = location.coordinate
         getPlaceName(location: location)
+        onLocationUpdated?(location.coordinate.latitude, location.coordinate.longitude)
     }
 
     public func getPlaceName(location: CLLocation) {
