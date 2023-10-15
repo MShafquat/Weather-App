@@ -12,15 +12,29 @@ struct HeaderView: View {
     @Binding var weatherData: OpenMeteoWeatherData?
 
     var body: some View {
-        Text(lastLocationName ?? "")
-            .font(.headline)
-        if let temperature = weatherData?.current.temperature_2m, let temperatureUnit = weatherData?.current_units.temperature_2m {
-            Text("Current Temperature: \(String(format: "%.1f", temperature))\(temperatureUnit)")
-                .font(.subheadline)
+        guard let weatherData = weatherData, let lastLocationName = lastLocationName else {
+            return AnyView(EmptyView())
         }
+        let view = HStack {
+            VStack(alignment: .leading) {
+                Text(lastLocationName)
+                    .font(.headline)
+                Text("Current Temperature: \(String(format: "%.1f", weatherData.current.temperature_2m))\(weatherData.current_units.temperature_2m)")
+                    .font(.subheadline)
+            }
+            Spacer()
+            VStack(alignment: .trailing) {
+                Text("\(weatherData.current.rain == 0 ? "Not raining" : "Raining")")
+                    .font(.subheadline)
+                Text("Current windspeed: \(String(format: "%.1f", weatherData.current.windspeed_10m)) \(weatherData.current_units.windspeed_10m)")
+                    .font(.subheadline)
+            }
+        }
+        .padding()
+        return AnyView(view)
     }
 }
 
 #Preview {
-    HeaderView(lastLocationName: .constant("Dhaka, Bangladesh"), weatherData: .constant(nil))
+    return HeaderView(lastLocationName: .constant("Dhaka, Bangladesh"), weatherData: .constant(OpenMeteoWeatherData.sample))
 }
