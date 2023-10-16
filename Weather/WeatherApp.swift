@@ -22,6 +22,7 @@ struct WeatherApp: App {
                         weatherDataManager.getWeatherData(latitude: latitude, longitude: longitude)
                     }
                 }
+                .preferredColorScheme(.dark)
         }
     }
 }

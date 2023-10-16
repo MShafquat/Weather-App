@@ -14,9 +14,9 @@ struct HomeView: View {
     var body: some View {
         HeaderView(lastLocationName: $locationManager.lastLocationName, weatherData: $weatherDataManager.weatherData)
             .onChange(of: locationManager) { _, newValue in
-                print(newValue)
                 weatherDataManager.getWeatherData(latitude: newValue.lastLocationCoordinate?.latitude ?? 0, longitude: newValue.lastLocationCoordinate?.longitude ?? 0)
             }
+            .preferredColorScheme(.dark)
     }
 }
 

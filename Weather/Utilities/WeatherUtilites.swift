@@ -74,4 +74,47 @@ final class WeatherUtilites {
             return .unrecognized
         }
     }
+
+
+    /// Returns an SF Symbol 5 icon for weather condition
+    /// - Parameter weatherCondition: an enum of type `WeatherConditions`
+    /// - Returns: `String`, name of the symbol
+    public static func getWeatherImage(for weatherCondition: WeatherConditions) -> String {
+        switch(weatherCondition) {
+        case .clearSky:
+            return "sun.max"
+        case .mainlyClear:
+            return "sun.min"
+        case .partlyCloudy:
+            return "cloud.sun"
+        case .overcast:
+            return "cloud"
+        case .fog:
+            return "cloud.fog"
+        case .depositingRimeFog:
+            return "cloud.fog"
+        case .drizzle:
+            return "cloud.drizzle"
+        case .freezingDrizzle:
+            return "cloud.drizzle"
+        case .rain:
+            return "cloud.rain"
+        case .freezingRain:
+            return "cloud.rain"
+        case .snowFall:
+            return "cloud.snow"
+        case .snowGrains:
+            return "snowflake"
+        case .rainShowers:
+            return "cloud.heavyrain"
+        case .snowShowers:
+            return "wind.snow"
+        case .thunderstorm:
+            return "cloud.bolt.rain"
+        case .thunderstormWithHail:
+            return "cloud.hail"
+        case .unrecognized:
+            return "questionmark"
+        }
+    }
 }
