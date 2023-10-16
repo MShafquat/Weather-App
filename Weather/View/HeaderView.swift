@@ -36,5 +36,5 @@ struct HeaderView: View {
 }
 
 #Preview {
-    return HeaderView(lastLocationName: .constant("Dhaka, Bangladesh"), weatherData: .constant(OpenMeteoWeatherData.sample))
+    return HeaderView(lastLocationName: .constant("Dhaka, Bangladesh"), weatherData: .constant(previewForecast))
 }
