@@ -14,12 +14,12 @@ struct OpenMeteoWeatherData: Codable {
     let elevation: Double
 
     let current: CurrentData
-    let current_units: CurrentUnit
+    let current_units: CurrentUnits
     let hourly: HourlyData
     let daily: DailyData
 }
 
-struct CurrentUnit: Codable {
+struct CurrentUnits: Codable {
     let time: String
     let temperature_2m: String
     let windspeed_10m: String

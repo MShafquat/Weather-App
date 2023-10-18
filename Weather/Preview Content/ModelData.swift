@@ -7,7 +7,7 @@
 
 import Foundation
 
-var previewForecast: OpenMeteoWeatherData = load("forecast.json")
+var previewForecast: WeatherData = OpenMeteoWeatherDataAdapter.convertToWeatherData(from: load("forecast.json") as OpenMeteoWeatherData)
 
 func load<T: Codable>(_ filename: String) -> T {
     let data: Data

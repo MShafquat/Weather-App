@@ -9,7 +9,7 @@ import SwiftUI
 
 @MainActor
 class WeatherDataManager: ObservableObject {
-    @Published var weatherData: OpenMeteoWeatherData?
+    @Published var weatherData: WeatherData?
 
     private func performOpenMeteoAPICall(latitude: Double, longitude: Double) async throws -> OpenMeteoWeatherData {
         let url = URL(string: "https://api.open-meteo.com/v1/forecast?latitude=\(latitude)&longitude=\(longitude)&current=temperature_2m,windspeed_10m,is_day,precipitation,weathercode&hourly=temperature_2m,windspeed_10m,precipitation_probability,weathercode,is_day&daily=temperature_2m_max,temperature_2m_min,precipitation_sum,weathercode,sunrise,sunset&timezone=auto")!
@@ -20,7 +20,8 @@ class WeatherDataManager: ObservableObject {
 
     public func getWeatherData(latitude: Double, longitude: Double) {
         Task {
-            weatherData = try await performOpenMeteoAPICall(latitude:latitude, longitude:longitude)
+            var openMeteoWeatherData = try await self.performOpenMeteoAPICall(latitude:latitude, longitude:longitude)
+            weatherData = OpenMeteoWeatherDataAdapter.convertToWeatherData(from: openMeteoWeatherData)
         }
     }
 }
