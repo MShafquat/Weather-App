@@ -47,7 +47,7 @@ struct HourView: View {
             Text("\(forecast.temperature.toString())\(units.temperature)")
                 .font(.subheadline)
         }
-        .padding([.top, .bottom, .trailing])
+        .padding([.vertical, .trailing])
     }
 }
 

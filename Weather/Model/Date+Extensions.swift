@@ -19,4 +19,10 @@ extension Date {
         dateFormatter.dateFormat = "dd' 'MMM'"
         return dateFormatter.string(from: self)
     }
+
+    public func getShortDateWithDay() -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "EEEE', 'dd' 'MMM'"
+        return dateFormatter.string(from: self)
+    }
 }

@@ -47,8 +47,8 @@ struct HourlyForecast: Identifiable {
 struct DailyForecast: Identifiable {
     let id = UUID()
     let time: Date
-    let sunrise: String
-    let sunset: String
+    let sunrise: Date
+    let sunset: Date
     let temperatureMax: Double
     let temperatureMin: Double
     let precipitationSum: Double

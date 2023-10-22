@@ -51,7 +51,7 @@ struct OpenMeteoWeatherDataAdapter {
         var dailyForecasts = [DailyForecast]()
 
         for i in 0..<numOfElements {
-            dailyForecasts.append(DailyForecast(time: getDate(from: dailyData.time[i]), sunrise: dailyData.sunrise[i], sunset: dailyData.sunset[i], temperatureMax: dailyData.temperature_2m_max[i], temperatureMin: dailyData.temperature_2m_min[i], precipitationSum: dailyData.precipitation_sum[i], weathercode: dailyData.weathercode[i]))
+            dailyForecasts.append(DailyForecast(time: getDate(from: dailyData.time[i]), sunrise: getDate(from: dailyData.sunrise[i]), sunset: getDate(from: dailyData.sunset[i]), temperatureMax: dailyData.temperature_2m_max[i], temperatureMin: dailyData.temperature_2m_min[i], precipitationSum: dailyData.precipitation_sum[i], weathercode: dailyData.weathercode[i]))
         }
         return dailyForecasts
     }

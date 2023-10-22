@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C159DB042AE5ABE8002A2B21 /* DailyForecastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C159DB032AE5ABE8002A2B21 /* DailyForecastView.swift */; };
 		C19027C02ADDACC900453B7D /* Double+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C19027BF2ADDACC900453B7D /* Double+Extensions.swift */; };
 		C19027C42ADDB05700453B7D /* forecast.json in Resources */ = {isa = PBXBuildFile; fileRef = C19027C32ADDB05700453B7D /* forecast.json */; };
 		C19027C62ADDB06A00453B7D /* ModelData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C19027C52ADDB06A00453B7D /* ModelData.swift */; };
@@ -28,6 +29,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		C159DB032AE5ABE8002A2B21 /* DailyForecastView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyForecastView.swift; sourceTree = "<group>"; };
 		C19027BF2ADDACC900453B7D /* Double+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double+Extensions.swift"; sourceTree = "<group>"; };
 		C19027C32ADDB05700453B7D /* forecast.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = forecast.json; sourceTree = "<group>"; };
 		C19027C52ADDB06A00453B7D /* ModelData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelData.swift; sourceTree = "<group>"; };
@@ -115,6 +117,7 @@
 				C1C7797F2AD6F2230004D898 /* HomeView.swift */,
 				C1C779842AD6FF0D0004D898 /* HeaderView.swift */,
 				C1ADFDDF2AE07F2000FA247A /* HourlyForecastView.swift */,
+				C159DB032AE5ABE8002A2B21 /* DailyForecastView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -211,6 +214,7 @@
 				C19027C02ADDACC900453B7D /* Double+Extensions.swift in Sources */,
 				C1AB95892AE59A1F008C3DFF /* MockWeatherManager.swift in Sources */,
 				C1C779832AD6F30B0004D898 /* LocationManager.swift in Sources */,
+				C159DB042AE5ABE8002A2B21 /* DailyForecastView.swift in Sources */,
 				C1ADFDDC2AE0732D00FA247A /* WeatherData.swift in Sources */,
 				C1AB95902AE5A7CA008C3DFF /* Date+Extensions.swift in Sources */,
 				C1C779802AD6F2230004D898 /* HomeView.swift in Sources */,
