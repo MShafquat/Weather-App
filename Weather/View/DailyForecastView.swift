@@ -20,7 +20,7 @@ struct DailyForecastView: View {
                 Text("Daily Weather Forecast")
                     .font(.headline)
                 VStack(alignment: .leading, spacing: 0) {
-                    ForEach(weatherData.dailyForecast.prefix(7)) { forecast in
+                    ForEach(weatherData.dailyForecast.filter{ $0.time >= Date() }.prefix(7)) { forecast in
                         DailyView(forecast: forecast, units: weatherData.units)
                     }
                 }

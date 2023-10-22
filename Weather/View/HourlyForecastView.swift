@@ -21,7 +21,7 @@ struct HourlyForecastView: View {
                     .font(.headline)
                 ScrollView (.horizontal, showsIndicators: false) {
                     HStack {
-                        ForEach(weatherData.hourlyForecast.prefix(12)) { forecast in
+                        ForEach(weatherData.hourlyForecast.filter { $0.time > Date() } .prefix(12)) { forecast in
                             HourView(forecast: forecast, units: weatherData.units)
                         }
                     }
