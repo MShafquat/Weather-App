@@ -10,10 +10,18 @@ import Foundation
 
 class LocationManager: NSObject, ObservableObject {
     private let locationManager = CLLocationManager()
+
     @Published var authorisationStatus: CLAuthorizationStatus = .notDetermined
-    @Published var lastLocationCoordinate: CLLocationCoordinate2D?
+    @Published var lastLocationCoordinate: CLLocationCoordinate2D? {
+        didSet {
+            // start remaining tasks on setting location
+            self.onLocationUpdated?(lastLocationCoordinate)
+        }
+    }
     @Published var lastLocationName: String?
-    var onLocationUpdated: ((Double, Double) -> Void)?
+    private var previousLocationName: String?
+
+    var onLocationUpdated: ((CLLocationCoordinate2D?) -> Void)?
 
     override init() {
         super.init()
@@ -44,17 +52,18 @@ extension LocationManager: CLLocationManagerDelegate {
 
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let location = locations.last else { return }
-        lastLocationCoordinate = location.coordinate
-        getPlaceName(location: location)
-        onLocationUpdated?(location.coordinate.latitude, location.coordinate.longitude)
+        self.getPlaceName(location: location)
     }
 
     public func getPlaceName(location: CLLocation) {
-        lastLocationName = nil
         CLGeocoder().reverseGeocodeLocation(location) { placemarks , error in
             if error == nil && placemarks!.count > 0 {
                 guard let placemark = placemarks?.last else { return }
-                self.lastLocationName = "\(placemark.name ?? "Unknown Place"), \(placemark.locality ?? "Unknown City"), \(placemark.country ?? "Unknown Country")"
+                let currentLocationName = "\(placemark.name ?? "Unknown Place"), \(placemark.locality ?? "Unknown City"), \(placemark.country ?? "Unknown Country")"
+                guard currentLocationName != self.previousLocationName else { return } // still in the same place, skip for network call optimization
+                self.previousLocationName = currentLocationName // save latest location placemark
+                self.lastLocationCoordinate = location.coordinate // save current coordinate
+                self.lastLocationName = currentLocationName
             }
         }
     }

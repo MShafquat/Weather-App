@@ -16,15 +16,11 @@ struct HomeView: View {
             Color("BackgroundColor").ignoresSafeArea()
             ScrollView {
                 HeaderView(lastLocationName: $locationManager.lastLocationName, weatherData: $weatherDataManager.weatherData)
-                    .onChange(of: locationManager) { _, newValue in
-                        weatherDataManager.getWeatherData(latitude: newValue.lastLocationCoordinate?.latitude ?? 0, longitude: newValue.lastLocationCoordinate?.longitude ?? 0)
-                    }
-                    .preferredColorScheme(.dark)
+                .preferredColorScheme(.dark)
                 HourlyForecastView(weatherData: $weatherDataManager.weatherData)
                 DailyForecastView(weatherData: $weatherDataManager.weatherData)
             }
             .padding()
-            .scrollIndicators(.hidden)
         }
         .preferredColorScheme(.dark)
     }

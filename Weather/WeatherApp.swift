@@ -17,9 +17,10 @@ struct WeatherApp: App {
             HomeView(locationManager: locationManager, weatherDataManager: weatherDataManager)
                 .onAppear() {
                     locationManager.startUpdatingLocation()
-                    locationManager.onLocationUpdated = { latitude, longitude in
+                    locationManager.onLocationUpdated = { location in
+                        guard let location = location else { return }
                         weatherDataManager.weatherData = nil
-                        weatherDataManager.getWeatherData(latitude: latitude, longitude: longitude)
+                        weatherDataManager.getWeatherData(latitude: location.latitude, longitude: location.longitude)
                     }
                 }
                 .preferredColorScheme(.dark)
