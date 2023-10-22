@@ -36,18 +36,10 @@ struct HourlyForecastView: View {
 struct HourView: View {
     var forecast: HourlyForecast
     var units: Units
-    let dateFormatter = DateFormatter()
-    let outputDateFormatter = DateFormatter()
-
-    init(forecast: HourlyForecast, units: Units) {
-        self.forecast = forecast
-        self.units = units
-        dateFormatter.dateFormat = "hh':'mm' 'aa'"
-    }
 
     var body: some View {
         VStack {
-            Text(dateFormatter.string(from: forecast.time))
+            Text(forecast.time.getTime())
                 .font(.headline)
             Image(systemName: WeatherUtilites.getWeatherImage(for: WeatherUtilites.getWMODescription(for: forecast.weathercode)))
                 .resizable()
