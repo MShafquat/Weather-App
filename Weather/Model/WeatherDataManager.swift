@@ -20,7 +20,7 @@ class WeatherDataManager: ObservableObject {
 
     public func getWeatherData(latitude: Double, longitude: Double) {
         Task {
-            var openMeteoWeatherData = try await self.performOpenMeteoAPICall(latitude:latitude, longitude:longitude)
+            let openMeteoWeatherData = try await self.performOpenMeteoAPICall(latitude:latitude, longitude:longitude)
             weatherData = OpenMeteoWeatherDataAdapter.convertToWeatherData(from: openMeteoWeatherData)
         }
     }

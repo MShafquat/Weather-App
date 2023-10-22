@@ -14,11 +14,15 @@ struct HomeView: View {
     var body: some View {
         ZStack {
             Color("BackgroundColor").ignoresSafeArea()
-            HeaderView(lastLocationName: $locationManager.lastLocationName, weatherData: $weatherDataManager.weatherData)
-                .onChange(of: locationManager) { _, newValue in
-                    weatherDataManager.getWeatherData(latitude: newValue.lastLocationCoordinate?.latitude ?? 0, longitude: newValue.lastLocationCoordinate?.longitude ?? 0)
-                }
-                .preferredColorScheme(.dark)
+            VStack {
+                HeaderView(lastLocationName: $locationManager.lastLocationName, weatherData: $weatherDataManager.weatherData)
+                    .onChange(of: locationManager) { _, newValue in
+                        weatherDataManager.getWeatherData(latitude: newValue.lastLocationCoordinate?.latitude ?? 0, longitude: newValue.lastLocationCoordinate?.longitude ?? 0)
+                    }
+                    .preferredColorScheme(.dark)
+                HourlyForecastView(weatherData: $weatherDataManager.weatherData)
+            }
+            .padding()
         }
         .preferredColorScheme(.dark)
     }
