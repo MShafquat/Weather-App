@@ -8,13 +8,9 @@
 import SwiftUI
 
 struct HourlyForecastView: View {
-    @Binding var weatherData: WeatherData?
+    var weatherData: WeatherData!
 
     var body: some View {
-        guard let weatherData = weatherData else {
-            return AnyView(EmptyView())
-        }
-
         let view = AnyView(
             VStack(alignment: .leading, spacing: 0) {
                 Text("Hourly Weather Forecast")
@@ -28,6 +24,8 @@ struct HourlyForecastView: View {
                 }
             }
             .padding()
+            .background(.gray.opacity(0.25))
+            .clipShape(RoundedRectangle(cornerRadius: 10))
         )
         return view
     }
@@ -38,19 +36,28 @@ struct HourView: View {
     var units: Units
 
     var body: some View {
-        VStack {
+        VStack(spacing: -10) {
             Text(forecast.time.getTime())
                 .font(.headline)
-            Image(systemName: WeatherUtilites.getWeatherImage(for: WeatherUtilites.getWMODescription(for: forecast.weathercode)))
-                .resizable()
-                .frame(width: 50, height: 50)
-            Text("\(forecast.temperature.toString())\(units.temperature)")
-                .font(.subheadline)
+            VStack {
+                Image(systemName: WeatherUtilites.getWeatherImage(for: WeatherUtilites.getWMODescription(for: forecast.weathercode)))
+                    .resizable()
+                    .font(.subheadline)
+                    .frame(width: 50, height: 50)
+                Text("\(forecast.temperature.toString())\(units.temperature)")
+                    .font(.subheadline)
+                HStack(spacing: 1) {
+                    Image(systemName: "umbrella")
+                    Text("\(forecast.precipitationProbability.toString(toPlace: 0))%")
+                }
+            }
+            .padding(30)
+            .background(.linearGradient(Gradient(colors: [.white, .gray.opacity(0.5)]), startPoint: .top, endPoint: .bottom))
+            .clipShape(Circle())
         }
-        .padding([.vertical, .trailing])
     }
 }
 
 #Preview {
-    HourlyForecastView(weatherData: .constant(previewForecast))
+    HourlyForecastView(weatherData: previewForecast)
 }

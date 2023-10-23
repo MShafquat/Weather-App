@@ -8,12 +8,9 @@
 import SwiftUI
 
 struct DailyForecastView: View {
-    @Binding var weatherData: WeatherData?
+    var weatherData: WeatherData!
 
     var body: some View {
-        guard let weatherData = weatherData else {
-            return AnyView(EmptyView())
-        }
 
         let view = AnyView(
             VStack(alignment: .leading, spacing: 0) {
@@ -22,10 +19,13 @@ struct DailyForecastView: View {
                 VStack(alignment: .leading, spacing: 0) {
                     ForEach(weatherData.dailyForecast.filter{ $0.time >= Date() }.prefix(7)) { forecast in
                         DailyView(forecast: forecast, units: weatherData.units)
+                        Spacer(minLength: 5)
                     }
                 }
             }
             .padding()
+            .background(.gray.opacity(0.25))
+            .clipShape(RoundedRectangle(cornerRadius: 10))
         )
         return view
     }
@@ -61,16 +61,29 @@ struct DailyView: View {
                 .frame(width: 50, height: 50)
             Spacer()
             VStack(alignment: .trailing) {
-                Text("\(forecast.temperatureMax.toString())\(units.temperature)")
-                    .font(.subheadline)
-                Text("\(forecast.temperatureMin.toString())\(units.temperature)")
-                    .font(.subheadline)
+                HStack(spacing: 1) {
+                    Image(systemName: "arrow.up.circle")
+                    Text("\(forecast.temperatureMax.toString())\(units.temperature)")
+                }
+                .font(.subheadline)
+                HStack(spacing: 1) {
+                    Image(systemName: "arrow.down.circle")
+                    Text("\(forecast.temperatureMin.toString())\(units.temperature)")
+                }
+                .font(.subheadline)
+                HStack(spacing: 1) {
+                    Image(systemName: "umbrella")
+                    Text("\(forecast.precipitationSum.toString()) \(units.precipitation)")
+                }
+                .font(.subheadline)
             }
         }
         .padding([.trailing, .vertical])
+        .background(.linearGradient(Gradient(colors: [.gray.opacity(0.20), .gray.opacity(0.50)]), startPoint: .top, endPoint: .bottom))
+        .clipShape(RoundedRectangle(cornerRadius: 10))
     }
 }
 
 #Preview {
-    DailyForecastView(weatherData: .constant(previewForecast))
+    DailyForecastView(weatherData: previewForecast)
 }

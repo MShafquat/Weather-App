@@ -8,7 +8,7 @@
 import Foundation
 
 extension Double {
-    public func toString() -> String {
-        return String(format: "%.1f", self)
+    public func toString(toPlace: Int = 1) -> String {
+        return String(format: "%.\(toPlace)f", self)
     }
 }

@@ -12,17 +12,18 @@ struct HomeView: View {
     @ObservedObject var weatherDataManager: WeatherDataManager
 
     var body: some View {
-        ZStack {
-            Color("BackgroundColor").ignoresSafeArea()
-            ScrollView {
-                HeaderView(lastLocationName: $locationManager.lastLocationName, weatherData: $weatherDataManager.weatherData)
-                .preferredColorScheme(.dark)
-                HourlyForecastView(weatherData: $weatherDataManager.weatherData)
-                DailyForecastView(weatherData: $weatherDataManager.weatherData)
-            }
-            .padding()
+        guard let lastLocationName = locationManager.lastLocationName, let weatherData = weatherDataManager.weatherData else {
+            return AnyView(EmptyView())
         }
-        .preferredColorScheme(.dark)
+        return AnyView(ZStack {
+            Color(.brown)
+                .ignoresSafeArea()
+            ScrollView {
+                HeaderView(lastLocationName: lastLocationName, weatherData: weatherData)
+                HourlyForecastView(weatherData: weatherData)
+                DailyForecastView(weatherData: weatherData)
+            }
+        })
     }
 }
 

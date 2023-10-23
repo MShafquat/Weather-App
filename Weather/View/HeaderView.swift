@@ -8,60 +8,52 @@
 import SwiftUI
 
 struct HeaderView: View {
-    @Binding var lastLocationName: String?
-    @Binding var weatherData: WeatherData?
+    var lastLocationName: String!
+    var weatherData: WeatherData!
 
     var body: some View {
-        guard let weatherData = weatherData, let lastLocationName = lastLocationName else {
-            return AnyView(EmptyView())
-        }
         let view = HStack(alignment: .lastTextBaseline) {
             VStack(alignment: .leading) {
+                Text("\(weatherData.currentWeather.temperature.toString())\(weatherData.units.temperature)")
+                    .font(.custom("Impact", size: 50))
+                    .accessibilityLabel("Current temperature: \(weatherData.currentWeather.temperature.toString())\(weatherData.units.temperature)")
                 HStack {
                     Image(systemName: "location")
-                        .font(.subheadline)
                     Text(lastLocationName)
-                        .font(.subheadline)
                 }
+                .font(.headline)
                 .accessibilityLabel("Current location: \(lastLocationName)")
                 HStack {
                     Image(systemName: "clock")
-                        .font(.subheadline)
                     Text("\(Date().formatted())")
-                        .font(.subheadline)
                 }
+                .font(.subheadline)
                 .accessibilityLabel("Updated time: \(Date().formatted())")
-                HStack {
-                    Image(systemName: "thermometer")
-                        .font(.largeTitle)
-                    Text("\(weatherData.currentWeather.temperature.toString())\(weatherData.units.temperature)")
-                        .font(.largeTitle)
-                }
-                .accessibilityLabel("Current temperature: \(weatherData.currentWeather.temperature.toString())\(weatherData.units.temperature)")
             }
             Spacer()
             VStack(alignment: .trailing) {
                 VStack(alignment: .trailing) {
                     Image(systemName: WeatherUtilites.getWeatherImage(for: WeatherUtilites.getWMODescription(for: weatherData.currentWeather.weathercode)))
                         .resizable()
+                        .font(.custom("Impact", size: 50))
                         .frame(width: 50, height: 50)
                     Text("\(WeatherUtilites.getWMODescription(for: weatherData.currentWeather.weathercode).rawValue)")
-                        .font(.headline)
+                        .font(.subheadline)
                 }
                 .accessibilityLabel("Current weather condition: \(WeatherUtilites.getWMODescription(for: weatherData.currentWeather.weathercode).rawValue)")
                 HStack {
                     Text("\(weatherData.currentWeather.windspeed.toString()) \(weatherData.units.windspeed)")
                     Image(systemName: "wind")
                 }
+                .font(.subheadline)
                 .accessibilityLabel("Current windspeed: \(weatherData.currentWeather.windspeed.toString()) \(weatherData.units.windspeed)")
             }
         }
-        .preferredColorScheme(.dark)
         .padding()
         return AnyView(view)
     }
 }
 
 #Preview {
-    return HeaderView(lastLocationName: .constant("Dhaka, Bangladesh"), weatherData: .constant(previewForecast))
+    return HeaderView(lastLocationName: "Dhaka, Bangladesh", weatherData: previewForecast)
 }
