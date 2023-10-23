@@ -33,8 +33,19 @@ class LocationManager: NSObject, ObservableObject {
         self.locationManager.requestWhenInUseAuthorization()
     }
 
+    private func isAuthorized(authorizationStatus: CLAuthorizationStatus) -> Bool {
+#if os(iOS)
+        let isNotAuthorized = authorisationStatus != .authorizedWhenInUse && authorisationStatus != .authorizedAlways
+#elseif os(macOS)
+        let isNotAuthorized = authorisationStatus != .authorized && authorisationStatus != .authorizedAlways
+#else
+        let isNotAuthorized = true
+#endif
+        return !isNotAuthorized
+    }
+
     public func startUpdatingLocation() {
-        if authorisationStatus != .authorizedWhenInUse && authorisationStatus != .authorizedAlways {
+        if !isAuthorized(authorizationStatus: authorisationStatus) {
             requestAuthorisation()
         } else {
             self.locationManager.startUpdatingLocation()
@@ -45,7 +56,7 @@ class LocationManager: NSObject, ObservableObject {
 extension LocationManager: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
         self.authorisationStatus = status
-        if status == .authorizedWhenInUse || status == .authorizedAlways {
+        if isAuthorized(authorizationStatus: authorisationStatus) {
             startUpdatingLocation()
         }
     }

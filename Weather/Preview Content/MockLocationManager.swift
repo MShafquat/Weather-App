@@ -11,7 +11,11 @@ import Foundation
 class MockLocationManager: LocationManager {
     override init() {
         super.init()
+        #if os(iOS)
         authorisationStatus = .authorizedWhenInUse
+        #elseif os(macOS)
+        authorisationStatus = .authorized
+        #endif
         lastLocationCoordinate = CLLocationCoordinate2D(latitude: 23, longitude: 89)
         lastLocationName = "Dhaka, Bangladesh"
     }
